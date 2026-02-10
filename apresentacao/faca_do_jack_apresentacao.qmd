@@ -1,0 +1,105 @@
+---
+title: "Técnica de Reamostragem: Jackknife"
+subtitle: "O Canivete suíço da Estatística"
+author: "Ana Caroline Alexandre Pantoja"
+institute: "Universidade Federal do Pará - Faculdade de Estatística"
+format:
+  revealjs: default
+---
+
+## Introdução {background-color="#1a1a1a"}
+
+-   **Definição:** Técnica de reamostragem não paramétrica baseada em simulações.
+
+-   **Origem:** Introduzido por Maurice Quenouille (1949) para controle de viés.
+
+-   **Nomenclatura:** Batizado por John Tukey (1958) como "Jackknife" (canivete suíço) por ser uma ferramenta versátil e pronta para qualquer "emergência" estatística.
+
+## Referencial Teórico {background-color="#1a1a1a"}
+
+O método baseia-se na ideia de que é possível estimar as propriedades de uma estatística observando como ela varia ao omitirmos partes dos dados originais.
+
+-   **Principais Usos:**
+    -   Redução de viés em amostras pequenas.
+    -   Cálculo de erro padrão sem assumir normalidade.
+    -   Detecção de observações influentes (*outliers*).
+
+## Geração de Subamostras {background-color="#1a1a1a"}
+
+-   **Jackknife Delete-1:** Remove-se uma observação por vez, gerando $n$ subamostras de tamanho $n-1$.
+-   **Jackknife Delete-d:** Remove-se um subconjunto de tamanho $d$. Crucial para estatísticas "não suaves".
+
+## Geração de Subamostras {background-color="#1a1a1a"}
+
+**Tabela 1: Ilustração do Método**
+
+| **Etapa de Reamostragem** | **Observações Mantidas (Subamostra)** | **Estimativa Parcial** ($\hat{\theta}_{i}$) |
+|------------------------|------------------------|------------------------|
+| **Omitindo** $X_1$ | $X_2, X_3, \dots, X_n$ | $\hat{\theta}_{-1}$ |
+| **Omitindo** $X_2$ | $X_1, X_3, \dots, X_n$ | $\hat{\theta}_{-2}$ |
+| **Omitindo** $X_3$ | $X_1, X_2, X_4, \dots, X_n$ | $\hat{\theta}_{-3}$ |
+| $\dots$ | $\dots$ | $\dots$ |
+| **Omitindo** $X_{n-1}$ | $X_1, X_2, X_3, \dots, X_{n-2}, X_n$ | $\hat{\theta}_{n-1}$ |
+| **Omitindo** $X_n$ | $X_1, X_2, X_3, \dots, X_{n-1}$ | $\hat{\theta}_{n}$ |
+
+## Pressuposições do Método
+
+-   **Independência:** As observações devem ser independentes e identicamente distribuídas (i.i.d.).
+-   **Suavidade:** O estimador deve ser "suave" (pequenas mudanças nos dados geram pequenas mudanças na estatística).
+-   **Tamanho Amostral:** Embora robusto para amostras pequenas, o viés e a variância dependem da representatividade da amostra original.
+
+## Fórmulas e Estatísticas Calculadas
+
+-   **Média das Estimativas:** $\bar{\theta}_{(\cdot)} = \frac{1}{n} \sum_{i=1}^{n} \hat{\theta}_{(i)}$
+-   **Viés Jackknife:** $\widehat{bias}_{jack} = (n-1)(\bar{\theta}_{(\cdot)} - \hat{\theta})$
+-   **Erro Padrão:** $\widehat{se}_{jack} = \sqrt{\frac{n-1}{n} \sum_{i=1}^{n} (\hat{\theta}_{(i)} - \bar{\theta}_{(\cdot)})^2}$
+-   **Estimativa Corrigida:** $\hat{\theta}_{jack} = \hat{\theta} - \widehat{bias}_{jack}$
+
+## Revisão de Literatura (Artigos)
+
+-   **Manoel et al. (2024):** Utiliza Jackknife em modelos não lineares para mitigar o efeito de *outliers* e melhorar a precisão dos parâmetros.
+-   **Jackknife-After-Bootstrap:** Focado na detecção de pontos influentes em modelos de regressão linear, avaliando a estabilidade do Bootstrap.
+-   **Egan (2006):** Discute o apoio vs. corroboração estatística, utilizando reamostragem para validar evidências em informática biomédica.
+
+## Aplicação: Base Law (n=15) {background-color="#2b0000"}
+
+-   **Cenário:** Correlação entre notas LSAT e GPA em faculdades de direito.
+-   **Estimativa Original (**$\hat{\theta}$): 0,7764.
+-   **Análise Jackknife:**
+    -   Erro Padrão: 0,1425.
+    -   Viés: -0,00647.
+-   **Resultado Ajustado:** $\approx 0,7828$ (após correção do viés negativo).
+
+## Aplicação: Base Law (n=15) {background-color="#2b0000"}
+
+![](graf_sensibilidade.png "Gráfico de sensibilidade: influência individual vs. correlação estimada."){width="700"}
+
+## Investigando o viés (Base Law) {background-color="#2b0000"}
+
+-   A Análise de Sensibilidade revelou que a **Observação nº 1** é um *outlier* de alta influência.
+-   Sem essa faculdade, a correlação "salta" para **0,89**.
+-   O Jackknife identifica que a maioria das reamostras fica abaixo da original, justificando o viés negativo.
+
+## Considerações Finais {background-color="#1a1a1a"}
+
+-   **Versatilidade:** O "canivete suíço" é eficaz para reduzir viés e diagnosticar dados influentes.
+-   **Limitação:** Requer independência das observações.
+-   **Poder de Perícia:** Transforma números frios em uma investigação detalhada sobre a robustez da sua ciência.
+-   **Eficácia Diagnóstica:** A aplicação prática provou que o Jackknife é superior na identificação de *outliers* que distorcem a correlação (Caso Law).
+-   **Correção de Viés:** O método permitiu "limpar" a estimativa original, aproximando-a do valor real esperado.
+
+
+## Referências {background-color="#1a1a1a"}
+
+-   BEYAZTAS, U.; ALIN, A. **Jackknife-After-Bootstrap Method for Detection of Influential Observations in Linear Regression Models**. Communications in Statistics - Simulation and Computation, v. 42, n. 6, 2013.
+-   BRILLINGER, D. R. **John W. Tukey: His Life and Professional Contributions**. The Annals of Statistics, v. 30, n. 6, 2002.
+-   EFRON, B. **The Jackknife, the Bootstrap and Other Resampling Plans**. Philadelphia: SIAM, 1982.
+-   EGAN, M. G. **Support versus corroboration**. Journal of Biomedical Informatics, v. 39, n. 1, 2006.
+-   MANOEL, I. dos S. et al. **Método Jackknife aplicado em ajustes de modelos não lineares em presença de outliers...** Caderno Pedagógico, v. 21, n. 10, 2024.
+
+## Referências {background-color="#1a1a1a"}
+
+-   MILLER, R. G. **The Jackknife - A Review**. Biometrika, v. 61, n. 1, 1974.
+-   QUENOUILLE, M. H. **Approximate Tests of Correlation in Time-Series**. Journal of the Royal Statistical Society, v. 11, n. 1, 1949.
+-   QUENOUILLE, M. H. **Notes on Bias in Estimation**. Biometrika, v. 43, n. 3/4, 1956.
+-   WU, C. F. J. **On the Asymptotic Properties of the Jackknife Histogram**. The Annals of Statistics, v. 18, n. 3, 1990.

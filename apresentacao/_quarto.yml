@@ -1,0 +1,54 @@
+project:
+  type: website
+  output-dir: docs
+format:
+  revealjs:
+    theme: blood
+    transition: fade
+    mainfont-size: 25px
+    width: 1200 # Aumenta a largura útil
+    height: 800
+    margin: 0.1 # Reduz a borda externa para o texto não "espremer"
+    section-divs: true
+    incremental: true
+    hash-type: number
+    center: true
+    css: |
+      /* Ajuste dos títulos internos para caberem em uma linha */
+      .reveal h2 {
+        font-size: 1.15em !important;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        margin-bottom: 0.8em;
+        border-bottom: 1px solid #8b0000; /* Linha sutil para "comportar" o título */
+        padding-bottom: 10px;
+      }
+
+      /* Organização da Capa (Title Slide) */
+      .reveal .title {
+        font-size: 1.5em !important;
+        margin-bottom: 10px !important;
+      }
+      
+      .reveal .subtitle {
+        font-size: 1.0em !important;
+        margin-bottom: 40px !important;
+        color: #a0a0a0;
+      }
+
+      .reveal .quarto-title-authors, .reveal .quarto-title-affiliation, .reveal .date {
+        display: block !important;
+        font-size: 0.75em !important;
+        line-height: 1.4 !important;
+        margin-top: 10px !important;
+      }
+
+      /* Caixa de conteúdo comportada */
+      .reveal .slides {
+        text-align: left; /* Alinha o texto à esquerda para maior legibilidade */
+      }
+      
+      .reveal .title-slide {
+        text-align: center; /* Mantém apenas a capa centralizada */
+      }
+      .reveal .references-list { font-size: 0.6em !important; line-height: 1.2; }
